@@ -19,7 +19,9 @@ router.get("/video", function (req, res) {
   //example: "bytes=3234-"
   if (range) {
       const parts = range.replace(/bytes=/, "").split("-")
+      //start of the chunk
       const start = parseInt(parts[0], 10)
+      //end of the chunk
       const end = parts[1]
         ? parseInt(parts[1], 10)
         : fileSize-1
@@ -44,6 +46,7 @@ router.get("/video", function (req, res) {
       // Stream the video chunk to the client
       file.pipe(res)
     } else {
+      
       const head = {
         'Content-Length': fileSize,
         'Content-Type': 'video/mp4',
@@ -64,13 +67,12 @@ router.post('/upload',upload.any('video'), async(req,res,next)=>{
         error.status = 400
         return next(error)
     }
-    const dimensions =sizeOf(file)
-    const aspectRatio = dimensions.width/dimensions.height
+    
     try {
         const video = new FeedModel({
             videoUrl: `http://localhost:3000/VideoApi/video/?path=${file}`,
             caption: req.body.caption,
-            aspectRatio: aspectRatio
+            
 
         })
         const savedVideo = await video.save()

@@ -13,11 +13,7 @@ const FeedSchema = new Schema({
         type:String,
         required: true
     },
-    aspectRatio:{
-        type: Number,
-        required: true
-
-    }
+   
     
 })
 
