@@ -1,21 +1,25 @@
 const express = require('express')
 const app = express()
 
+
 const dotenv = require('dotenv')
 dotenv.config()
 
 const PORT = process.env.PORT || 3000
-const db = require('./src/models/sequelize_init')
+require('./config/init_mongodb')
+const VideoRoute = require('./routes/routes')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-//syncing model to db
-db.sequelize.sync()
+app.use('/uploads', express.static(__dirname + '/uploads'))
+
 //home
 app.get('/', (req, res) => {
-    res.send('Hello')
+    res.sendFile(__dirname + "/index.html");
 })
+
+app.use('/VideoApi',VideoRoute)
 
 //listen to the port
 app.listen(PORT, () => {
