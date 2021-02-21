@@ -16,7 +16,7 @@ app.use('/uploads', express.static(__dirname + '/uploads'))
 
 //home
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+   res.send('hello')
 })
 
 app.use('/VideoApi',VideoRoute)
