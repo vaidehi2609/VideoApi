@@ -7,19 +7,20 @@ dotenv.config()
 
 const PORT = process.env.PORT || 3000
 require('./config/init_mongodb')
-const VideoRoute = require('./routes/routes')
+const FileRoute = require('./routes/routes')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use('/uploads', express.static(__dirname + '/uploads'))
+app.use('/uploadVideo', express.static(__dirname + '/uploadVideo'))
+app.use('/uploadAudio',express.static(__dirname + '/uploadAudio'))
 
 //home
 app.get('/', (req, res) => {
    res.send('hello')
 })
 
-app.use('/VideoApi',VideoRoute)
+app.use('/Api',FileRoute)
 
 //listen to the port
 app.listen(PORT, () => {
